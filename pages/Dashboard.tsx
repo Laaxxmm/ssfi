@@ -57,9 +57,11 @@ import {
    User,
    Map,
    Trophy,
-   Activity
+   Activity,
+   Menu
 } from 'lucide-react';
 import { generatePerformanceReport } from '../services/geminiService';
+import { StudentForm, CoachForm, ClubForm, DistrictForm, StateForm } from '../components/RegistrationForms';
 
 // --- Shared Components ---
 
@@ -924,7 +926,10 @@ const NationalAdminView = ({ heroSlides, addHeroSlide, deleteHeroSlide, publicEv
    switch (activeSection) {
       case 'overview': return <MasterControlView />;
       case 'roles': return <RoleManagementView />;
-      case 'settings': return <SettingsView />;
+      case 'registrations':
+         return <RegistrationView />;
+      case 'settings':
+         return <SettingsView />;
       case 'cms': return <FrontEndSettingsView />;
 
       case 'events':
@@ -1003,6 +1008,7 @@ const Dashboard = () => {
    } = useStore();
 
    const [activeTab, setActiveTab] = useState('dashboard');
+   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
    const [showAI, setShowAI] = useState(false);
    const [aiInsight, setAiInsight] = useState<string>("");
    const [loadingAi, setLoadingAi] = useState(false);
@@ -1074,11 +1080,41 @@ const Dashboard = () => {
    };
 
 
-   return (
-      <div className="flex h-screen w-full bg-[#0f172a] overflow-hidden font-sans text-white">
-         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+   if (!currentUser) {
+      return (
+         <div className="flex items-center justify-center h-screen w-full bg-[#0f172a] text-white">
+            <div className="text-center">
+               <h2 className="text-2xl font-bold mb-4">Access Denied</h2>
+               <p className="text-white/50 mb-6">Please log in to view your dashboard.</p>
+               <Button onClick={() => window.location.href = '/'} variant="secondary">Return Home</Button>
+            </div>
+         </div>
+      );
+   }
 
-         <main className="flex-1 ml-64 p-8 overflow-y-auto relative h-full">
+   return (
+      <div className="min-h-screen bg-slate-900 text-white relative">
+         <Sidebar
+            activeTab={activeTab}
+            setActiveTab={(tab) => { setActiveTab(tab); setIsSidebarOpen(false); }}
+            isOpen={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
+         />
+
+         {/* Mobile Header */}
+         <div className="md:hidden flex items-center justify-between p-4 glass-panel border-b border-white/10 sticky top-0 z-30">
+            <div className="flex items-center gap-3">
+               <button onClick={() => setIsSidebarOpen(true)} className="p-2 -ml-2 text-white/70 hover:text-white">
+                  <Menu size={24} />
+               </button>
+               <span className="font-display font-bold text-lg">SSFI Admin</span>
+            </div>
+            <div className="w-8 h-8 rounded-full bg-ssfi-gold/20 flex items-center justify-center text-ssfi-gold font-bold border border-ssfi-gold/50">
+               {currentUser.name[0]}
+            </div>
+         </div>
+
+         <div className="md:ml-64 p-4 md:p-8 transition-all duration-300">
             {/* Background Decor */}
             <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
                <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-ssfi-navy/30 rounded-full blur-[120px]" />
@@ -1148,7 +1184,7 @@ const Dashboard = () => {
             <div className="relative z-10">
                {renderContent()}
             </div>
-         </main>
+         </div>
       </div>
    );
 };

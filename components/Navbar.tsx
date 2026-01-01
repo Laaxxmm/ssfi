@@ -13,6 +13,7 @@ const Navbar = () => {
 
   const links = [
     { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
     { name: 'Events', path: '/events' },
     { name: 'Gallery', path: '/gallery' },
     { name: 'Blogs', path: '/blogs' },
@@ -28,8 +29,8 @@ const Navbar = () => {
 
   const navVariants: Variants = {
     hidden: { y: -100, opacity: 0 },
-    visible: { 
-      y: 0, 
+    visible: {
+      y: 0,
       opacity: 1,
       transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
     }
@@ -44,7 +45,7 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          
+
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-ssfi-navy to-blue-500 flex items-center justify-center border border-white/20 shadow-lg group-hover:scale-110 transition-transform duration-300">
@@ -62,9 +63,8 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.path}
-                className={`relative text-sm font-medium transition-colors hover:text-ssfi-gold ${
-                  location.pathname === link.path ? 'text-ssfi-gold' : 'text-white/80 dark:text-white/80'
-                }`}
+                className={`relative text-sm font-medium transition-colors hover:text-ssfi-gold ${location.pathname === link.path ? 'text-ssfi-gold' : 'text-white/80 dark:text-white/80'
+                  }`}
               >
                 {link.name}
                 {location.pathname === link.path && (
@@ -85,8 +85,8 @@ const Navbar = () => {
             >
               {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-            <Button 
-              variant="secondary" 
+            <Button
+              variant="secondary"
               onClick={handleAuthAction}
               className="!py-2 !px-6 text-sm"
             >
@@ -96,7 +96,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-4">
-             <button
+            <button
               onClick={toggleTheme}
               className="p-2 rounded-full hover:bg-white/10 transition-colors text-white"
             >
@@ -133,8 +133,8 @@ const Navbar = () => {
                 </Link>
               ))}
               <div className="pt-4 mt-4 border-t border-white/10">
-                 <Button 
-                  variant="primary" 
+                <Button
+                  variant="primary"
                   onClick={() => {
                     handleAuthAction();
                     setIsOpen(false);

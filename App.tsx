@@ -2,11 +2,13 @@ import React from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useStore } from './store';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Landing from './pages/Landing';
 import Events from './pages/Events';
 import Gallery from './pages/Gallery';
 import Blogs from './pages/Blogs';
+import About from './pages/About';
 import EventDetails from './pages/EventDetails';
 import Layout from './components/Layout';
 
@@ -63,8 +65,22 @@ const App = () => {
               </Layout>
             }
           />
+          <Route
+            path="/about"
+            element={
+              <Layout>
+                <About />
+              </Layout>
+            }
+          />
+
+
 
           {/* Auth Routes */}
+          <Route
+            path="/register"
+            element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />}
+          />
           <Route
             path="/login"
             element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />}

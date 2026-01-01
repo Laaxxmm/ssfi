@@ -30,6 +30,8 @@ interface AppState {
 
   cmsSection: string;
   setCmsSection: (section: string) => void;
+  registrationView: string;
+  setRegistrationView: (view: string) => void;
 }
 
 export const useStore = create<AppState>()(
@@ -147,6 +149,8 @@ export const useStore = create<AppState>()(
       // UI State
       cmsSection: 'hero',
       setCmsSection: (section) => set({ cmsSection: section }),
+      registrationView: 'student',
+      setRegistrationView: (view) => set({ registrationView: view }),
     }),
     {
       name: 'ssfi-storage',

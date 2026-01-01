@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Button, GlassCard, Badge } from '../components/UI';
-import { ChevronRight, ChevronLeft, MapPin, ArrowRight, TrendingUp, Users, Medal, Trophy, Star, Target } from 'lucide-react';
+import { ChevronRight, ChevronLeft, MapPin, ArrowRight, TrendingUp, Users, Medal, Trophy, Star, Target, Zap, Activity, Crown, Heart, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store';
 
@@ -26,6 +26,15 @@ const Landing = () => {
    const safeHeroSlides = heroSlides || [];
    const safePublicEvents = publicEvents || [];
    const safeBlogPosts = blogPosts || [];
+
+   const sponsors = [
+      { name: 'SpeedWheels', icon: Zap, color: 'text-yellow-400', desc: 'Official Equipment Partner' },
+      { name: 'GlidePro', icon: Activity, color: 'text-blue-400', desc: 'Performance Wear' },
+      { name: 'SkateMaster', icon: Crown, color: 'text-purple-400', desc: 'Training Academies' },
+      { name: 'UrbanRoll', icon: Target, color: 'text-red-400', desc: 'Street Gear' },
+      { name: 'HydraSport', icon: Heart, color: 'text-cyan-400', desc: 'Hydration Partners' },
+      { name: 'SafeGuard', icon: Shield, color: 'text-green-400', desc: 'Safety Equipment' },
+   ];
 
    if (!safeHeroSlides.length) {
       return <div className="min-h-screen flex items-center justify-center text-white">Loading content...</div>;
@@ -342,12 +351,19 @@ const Landing = () => {
                      <ArrowRight size={18} className="text-ssfi-navy/50 dark:text-white/50" />
                   </div>
                   <div className="grid grid-cols-2 gap-2 h-[140px]">
-                     <img src="https://images.unsplash.com/photo-1520697966380-60b21950d24c?q=80&w=200&auto=format&fit=crop" className="w-full h-full object-cover rounded-lg" />
-                     <img src="https://images.unsplash.com/photo-1533560796336-d24ebf4c6e94?q=80&w=200&auto=format&fit=crop" className="w-full h-full object-cover rounded-lg" />
+                     <div className="aspect-square rounded-lg overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=400&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Skating 1" />
+                     </div>
+                     <div className="aspect-square rounded-lg overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1552674605-4694559e5bc7?q=80&w=400&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Skating 2" />
+                     </div>
                   </div>
                   <div className="flex gap-2 mt-4">
-                     <span className="text-[10px] px-2 py-1 rounded bg-gray-100 dark:bg-white/10 border border-gray-200 dark:border-white/5 text-gray-600 dark:text-gray-300">#Nationals2024</span>
-                     <span className="text-[10px] px-2 py-1 rounded bg-gray-100 dark:bg-white/10 border border-gray-200 dark:border-white/5 text-gray-600 dark:text-gray-300">#Training</span>
+                     {['#Nationals2024', '#Training'].map(tag => (
+                        <span key={tag} className="px-2 py-1 rounded bg-gray-100 dark:bg-white/10 border border-gray-200 dark:border-white/5 text-[10px] font-bold text-gray-600 dark:text-gray-300">
+                           {tag}
+                        </span>
+                     ))}
                   </div>
                </div>
 
@@ -380,6 +396,30 @@ const Landing = () => {
                   </div>
                </div>
 
+            </div>
+         </section>
+
+         {/* Sponsors Section */}
+         <section className="max-w-7xl mx-auto px-4 w-full py-20 border-t border-white/10 mb-20">
+            <div className="text-center mb-12">
+               <h2 className="text-2xl font-bold font-display text-ssfi-navy dark:text-white mb-2">Our Partners & Sponsors</h2>
+               <p className="text-ssfi-navy/60 dark:text-white/40">Powering the future of Indian Skating</p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+               {sponsors.map((s, i) => (
+                  <motion.div
+                     key={i}
+                     whileHover={{ y: -5 }}
+                     className="p-6 bg-white border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl flex flex-col items-center justify-center text-center gap-4 hover:border-gray-300 dark:hover:border-white/10 transition-colors group cursor-pointer shadow-sm"
+                  >
+                     <s.icon size={32} className={`${s.color} opacity-70 group-hover:opacity-100 transition-opacity`} />
+                     <div>
+                        <div className="font-bold text-ssfi-navy dark:text-white text-sm tracking-wide">{s.name}</div>
+                        <div className="text-[10px] text-ssfi-navy/50 dark:text-white/30 uppercase mt-1">{s.desc}</div>
+                     </div>
+                  </motion.div>
+               ))}
             </div>
          </section>
       </div>
